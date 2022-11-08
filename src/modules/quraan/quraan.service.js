@@ -5,49 +5,49 @@ const csvtojson = require("csvtojson");
 
 // ---------------------------------------- TEST ROUTE ---------------------------------------------
 // -------------------------------------------------------------------------------------------------
-exports.test = async (req, res, next) => {
-  try {
-    // res.write("Uploading File!");
-    const parsedData = await csvtojson().fromString(req.file.buffer.toString());
-    let bulkUpdateOperations = [];
-    let { language, author } = req.query;
-    const quranData = await Quraan.aggregate([
-      {
-        $project: {
-          chapter: "$chapter",
-          verse: "$verse",
-          translations: "$translations",
-        },
-      },
-    ]);
+// exports.test = async (req, res, next) => {
+//   try {
+//     // res.write("Uploading File!");
+//     const parsedData = await csvtojson().fromString(req.file.buffer.toString());
+//     let bulkUpdateOperations = [];
+//     let { language, author } = req.query;
+//     const quranData = await Quraan.aggregate([
+//       {
+//         $project: {
+//           chapter: "$chapter",
+//           verse: "$verse",
+//           translations: "$translations",
+//         },
+//       },
+//     ]);
 
-    quranData.forEach((currentElement, currentElementIndex) => {
-      bulkUpdateOperations.push({
-        updateOne: {
-          filter: {
-            chapter: currentElement.chapter,
-            verse: currentElement.verse,
-          },
-          update: {
-            $push: {
-              translations: {
-                language: language,
-                author: author || "web",
-                translation: parsedData[currentElementIndex].translation,
-              },
-            },
-          },
-        },
-      });
-    });
+//     quranData.forEach((currentElement, currentElementIndex) => {
+//       bulkUpdateOperations.push({
+//         updateOne: {
+//           filter: {
+//             chapter: currentElement.chapter,
+//             verse: currentElement.verse,
+//           },
+//           update: {
+//             $push: {
+//               translations: {
+//                 language: language,
+//                 author: author || "web",
+//                 translation: parsedData[currentElementIndex].translation,
+//               },
+//             },
+//           },
+//         },
+//       });
+//     });
 
-    const data = await Quraan.bulkWrite(bulkUpdateOperations);
-    console.log(data);
-    res.send(data);
-  } catch (err) {
-    next(err);
-  }
-};
+//     const data = await Quraan.bulkWrite(bulkUpdateOperations);
+//     console.log(data);
+//     res.send(data);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 // -------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------
 
