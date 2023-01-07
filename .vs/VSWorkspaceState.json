@@ -1,0 +1,14 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\helpers",
+    "\\src\\middleware",
+    "\\src\\modules",
+    "\\src\\modules\\chapter",
+    "\\src\\modules\\quraan",
+    "\\src\\public"
+  ],
+  "SelectedNode": "\\src\\modules\\quraan\\quraan.model.js",
+  "PreviewInSolutionExplorer": false
+}
